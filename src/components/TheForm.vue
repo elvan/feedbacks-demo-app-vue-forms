@@ -1,13 +1,15 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: nameValidity === 'invalid' }">
       <label for="user-name">Your Name</label>
       <input
         id="user-name"
         name="user-name"
         type="text"
-        v-model.trim="userName"
+        v-model.trim="name"
+        @blur="validateInput"
       />
+      <p v-if="nameValidity === 'invalid'">Please enter a valid name</p>
     </div>
 
     <div class="form-control">
@@ -115,19 +117,20 @@
 export default {
   data() {
     return {
-      userName: '',
+      name: '',
       age: '',
       referrer: 'google',
       interest: [],
       how: '',
       term: false,
+      nameValidity: 'pending',
     };
   },
 
   methods: {
     submitForm() {
       console.log('Form submitted!');
-      console.log('User Name:', this.userName);
+      console.log('User Name:', this.name);
       console.log('Age:', this.age);
       console.log('Referrer:', this.referrer);
       console.log('Interests:', this.interest);
@@ -135,12 +138,20 @@ export default {
       console.log('Terms:', this.term);
 
       // Reset the form
-      this.userName = '';
+      this.name = '';
       this.age = '';
       this.referrer = 'google';
       this.interest = [];
       this.how = '';
       this.term = false;
+    },
+
+    validateInput() {
+      if (this.name === '') {
+        this.nameValidity = 'invalid';
+      } else {
+        this.nameValidity = 'valid';
+      }
     },
   },
 };
@@ -158,6 +169,14 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label {
+  color: red;
 }
 
 label {
