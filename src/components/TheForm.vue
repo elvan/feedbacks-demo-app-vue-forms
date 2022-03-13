@@ -108,7 +108,7 @@
     </div>
 
     <div class="form-control">
-      <rating-control></rating-control>
+      <rating-control v-model="rating"></rating-control>
     </div>
 
     <div>
@@ -134,6 +134,7 @@ export default {
       how: '',
       term: false,
       nameValidity: 'pending',
+      rating: null,
     };
   },
 
@@ -146,6 +147,7 @@ export default {
       console.log('Interests:', this.interest);
       console.log('How:', this.how);
       console.log('Terms:', this.term);
+      console.log('Rating:', this.rating);
 
       // Reset the form
       this.name = '';
@@ -154,6 +156,7 @@ export default {
       this.interest = [];
       this.how = '';
       this.term = false;
+      this.nameValidity = null;
     },
 
     validateInput() {
